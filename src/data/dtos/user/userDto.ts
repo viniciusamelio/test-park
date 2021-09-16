@@ -1,10 +1,10 @@
 import VehicleDto from "../vehicle/vehicleDto";
 
 type UserDto = {
-    id: String;
-    name: String;
-    password:String;
-    email:String;
+    id: string;
+    name: string;
+    password:string;
+    email:string;
     vehicle: VehicleDto[]
 }
 
