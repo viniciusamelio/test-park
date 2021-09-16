@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  db:
+    image: mongo:4.2
+    #Usar esse nome aqui no host
+    container_name: db
+    restart: always
+    ports:
+      - 27017:27017
+    # environment: 
+    #   MONGO_INITDB_DATABASE: park
+    #   MONGO_INITDB_ROOT_USERNAME: admin
+    #   MONGO_INITDB_ROOT_PASSWORD: admin
+  api:
+    image: node:latest
+    container_name: api
+    restart: always
+    ports: 
+      - 3000:3000
+    volumes: 
+      - .:/usr/src/app
+    working_dir: /usr/src/app
+    command: bash -c "npm install && npm run dev"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
