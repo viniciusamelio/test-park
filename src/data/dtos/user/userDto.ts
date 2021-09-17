@@ -1,11 +1,11 @@
 import VehicleDto from "../vehicle/vehicleDto";
 
 type UserDto = {
-    id: string;
+    id?: string;
     name: string;
     password:string;
     email:string;
-    vehicle: VehicleDto[]
+    vehicle?: VehicleDto[]|null;
 }
 
 export default UserDto;
