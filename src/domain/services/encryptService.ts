@@ -1,5 +1,5 @@
 interface EncryptService{
-    encrypt(data:string) : Promise<boolean>|boolean;
+    encrypt(data:string) : Promise<string>|string;
     compare(data:string,hash:string): Promise<boolean>|boolean;
 }
 
