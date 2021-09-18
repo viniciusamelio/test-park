@@ -4,6 +4,7 @@ import CreateUserUsecase from "../usecases/user/createUserUsecase";
 import FindUserByEmailUsecase from "../usecases/user/findUserByEmailUsecase";
 import FindUserByIdUsecase from "../usecases/user/findUserByIdUsecase";
 import ListUserUsecase from "../usecases/user/listUserUsecase";
+import RemoveUserUsecase from "../usecases/user/removeUserUsecase";
 import UpdateUserUseCase from "../usecases/user/updateUserUsecase";
 
 class User{
@@ -65,6 +66,11 @@ class User{
     }
 
     getById = async (usecase: FindUserByIdUsecase, id: string) => {
+        const result = await usecase.call(id);
+        return result;
+    }
+
+    remove = async (usecase: RemoveUserUsecase, id:string) => {
         const result = await usecase.call(id);
         return result;
     }
