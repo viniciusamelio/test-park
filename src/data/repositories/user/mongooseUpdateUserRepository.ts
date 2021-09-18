@@ -22,7 +22,7 @@ class MongooseUpdateUserRepository implements UpdateUserRepository{
                 {
                     new:true
                 }
-            );
+            ).select('-password');
         } catch (error) {
             result = new RepositoryError('Houve um erro ao atualizar seu usuário',error,400);
         }

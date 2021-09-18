@@ -12,7 +12,7 @@ class MongooseListUserRepository implements ListUserRepository{
         let result;
         try {
             await this.mongoose.openConnection();
-            result = await UserSchema.find();
+            result = await UserSchema.find().select('-password');
         } catch (error) {
             result = new RepositoryError('Houve um erro ao listar os usuários',error, 400);
         }
