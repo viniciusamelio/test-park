@@ -16,8 +16,8 @@ class UserController{
     createUser = async(request:Request, response:Response) => {
         try {
             const data = request.body;
-            this.user = new User(data, this.createUserUseCase);
-            const result = await this.user.save();
+            this.user = new User(data);
+            const result = await this.user.create(this.createUserUseCase);
             if(result instanceof DomainError){
                 return response.status(result.statusCode!).json(result);
             }

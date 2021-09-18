@@ -1,13 +1,13 @@
 import UserDto from "../../data/dtos/user/userDto";
 import InvalidEntityError from "../errors/invalidEntity";
 import CreateUserUsecase from "../usecases/user/createUserUsecase";
+import UpdateUserUseCase from "../usecases/user/updateUserUseCase";
 
 class User{
 
     private emailRegex = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
     
-    constructor(public data : UserDto,
-                private createUserUseCase: CreateUserUsecase){
+    constructor(public data: UserDto){
         this.checkEmail(data.email);
         this.checkName(data.name);
         this.checkPassword(data.password);
@@ -40,8 +40,13 @@ class User{
         }
     }
 
-    create = async () => {
-        const result = await this.createUserUseCase.call(this.data);
+    create = async (usecase: CreateUserUsecase) => {
+        const result = await usecase.call(this.data);
+        return result;
+    }
+
+    update = async (usecase: UpdateUserUseCase) => {
+        const result = await usecase.call(this.data);
         return result;
     }
 }
