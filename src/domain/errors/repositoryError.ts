@@ -1,12 +1,13 @@
 import DomainError from "./domainError";
 
-class RepositoryError implements DomainError{
+class RepositoryError extends DomainError{
 
-    message: String;
+    message: string;
     stackTrace: any;
-    statusCode: Number;
+    statusCode: number;
 
-    constructor(message:String,stackTrace:any,statusCode:Number){
+    constructor(message:string,stackTrace:any,statusCode:number){
+        super(message);
         this.message = message;
         this.stackTrace = stackTrace;
         this.statusCode = statusCode;

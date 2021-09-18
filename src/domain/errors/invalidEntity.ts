@@ -1,10 +1,11 @@
 import DomainError from "./domainError";
 
-class InvalidEntityError implements DomainError{
-    message: String;
+class InvalidEntityError extends DomainError{
+    message: string;
     stackTrace?: any;
-    statusCode:Number;
-    constructor(message:String, stackTrace?:any){
+    statusCode:number;
+    constructor(message:string, stackTrace?:any){
+        super(message);
         this.message = message;
         this.stackTrace = stackTrace;
         this.statusCode = 400;
