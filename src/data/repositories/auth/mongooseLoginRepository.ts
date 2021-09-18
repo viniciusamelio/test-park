@@ -11,7 +11,7 @@ class MongooseLoginRepository implements LoginRepository{
     async call(data: AuthDto): Promise< UserDto | DomainError| null> {
         let result;
         try {
-            this.mongoose.openConnection();
+            await this.mongoose.openConnection();
             const user = await UserSchema.findOne({
                 email: data.email
             });

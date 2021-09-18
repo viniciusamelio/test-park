@@ -10,9 +10,13 @@ class LoginUsecase{
 
     async call(data:AuthDto) : Promise<AuthError|DomainError|ResponseAuthDto>{
         const result = await this.repository.call(data);
-        if(!result) return new AuthError();
+        if(result == null){
+            return new AuthError();
+        }
         if(result instanceof DomainError) return result;
-        const isValidAuth = this.hashService.compare(data.password, result.password);
+        
+        const isValidAuth = await this.hashService.compare(data.password, result.password);
+        
         if(!isValidAuth) return new AuthError();
         return {message: "Logado com sucesso!"};
     }

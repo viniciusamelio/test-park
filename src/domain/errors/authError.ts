@@ -1,12 +1,11 @@
 import DomainError from "./domainError";
 
-class AuthError implements DomainError{
-    message: String;
+class AuthError extends DomainError{
     stackTrace?: any;
     statusCode?: number | undefined;
 
     constructor(){
-        this.message = "Credenciais inválidas";
+        super("Credenciais inválidas");
         this.statusCode = 401;
     }
 
