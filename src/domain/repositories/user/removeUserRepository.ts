@@ -1,7 +1,7 @@
 import DomainError from "../../errors/domainError";
 
 interface RemoveUserRepository{
-    call(data:String) : Promise<String|DomainError>;
+    call(data:string) : Promise<String|DomainError>;
 }
 
 export default RemoveUserRepository;
