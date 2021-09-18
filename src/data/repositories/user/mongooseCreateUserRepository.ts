@@ -6,7 +6,7 @@ import UserDto from "../../dtos/user/userDto";
 import UserSchema from '../../../external/mongoose/schemas/user';
 
 class MongooseCreateUserRepository implements CreateUserRepository{
-    constructor(mongoose: MongooseService){}
+    constructor(private mongoose: MongooseService){}
 
     async call(data: UserDto): Promise<UserDto | DomainError> {
         let result;
@@ -15,6 +15,7 @@ class MongooseCreateUserRepository implements CreateUserRepository{
         } catch (error) {
             result = new RepositoryError('Houve um erro ao salvar o usuário',error,500);
         }
+        this.mongoose.closeConnection();
         return result;
     }
 
