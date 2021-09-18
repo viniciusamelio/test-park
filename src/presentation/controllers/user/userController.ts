@@ -3,6 +3,7 @@ import MongooseCreateUserRepository from "../../../data/repositories/user/mongoo
 import MongooseFindUserByEmailRepository from "../../../data/repositories/user/mongooseFindUserByEmailRepository";
 import MongooseFindUserByIdRepository from "../../../data/repositories/user/mongooseFindUserByIdRepository";
 import MongooseListUserRepository from "../../../data/repositories/user/mongooseListUserRepository";
+import MongooseRemoveUserRepository from "../../../data/repositories/user/mongooseRemoveUserRepository";
 import MongooseUpdateUserRepository from "../../../data/repositories/user/mongooseUpdateUserRepository";
 import User from "../../../domain/entities/user";
 import DomainError from "../../../domain/errors/domainError";
@@ -10,6 +11,7 @@ import CreateUserUsecase from "../../../domain/usecases/user/createUserUsecase";
 import FindUserByEmailUsecase from "../../../domain/usecases/user/findUserByEmailUsecase";
 import FindUserByIdUsecase from "../../../domain/usecases/user/findUserByIdUsecase";
 import ListUserUsecase from "../../../domain/usecases/user/listUserUsecase";
+import RemoveUserUsecase from "../../../domain/usecases/user/removeUserUsecase";
 import UpdateUserUseCase from "../../../domain/usecases/user/updateUserUsecase";
 import BcryptService from "../../../external/bcrypt/bcryptService";
 import MongooseService from "../../../external/mongoose/mongooseService";
@@ -22,6 +24,7 @@ class UserController{
     private listUserUseCase : ListUserUsecase = new ListUserUsecase( new MongooseListUserRepository(this.mongooseService) );
     private findUserByEmailUseCase : FindUserByEmailUsecase = new FindUserByEmailUsecase( new MongooseFindUserByEmailRepository(this.mongooseService) );
     private findUserByIdUseCase : FindUserByIdUsecase = new FindUserByIdUsecase( new MongooseFindUserByIdRepository(this.mongooseService) );
+    private removeUserUseCase : RemoveUserUsecase = new  RemoveUserUsecase( new MongooseRemoveUserRepository(this.mongooseService) );
 
     createUser = async(request:Request, response:Response) => {
         try {
@@ -90,6 +93,21 @@ class UserController{
         try {
             this.user = new User();
             const result = await this.user.getById(this.findUserByIdUseCase, request.params.id);
+            if(result instanceof DomainError){
+                return response.status(result.statusCode!).json(result);
+            }
+            return response.json(result);
+        } catch (error) {
+            let statusCode = 500;
+            if(error instanceof DomainError) statusCode = 400;
+            return response.status(statusCode).json(error);
+        }  
+    }
+
+    removeUser = async(request:Request, response: Response) => {
+        try {
+            this.user = new User();
+            const result = await this.user.remove(this.removeUserUseCase, request.params.id);
             if(result instanceof DomainError){
                 return response.status(result.statusCode!).json(result);
             }
