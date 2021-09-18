@@ -1,6 +1,6 @@
 interface DomainError{
     message:String;
-    stackTrace:any;
+    stackTrace?:any;
 }
 
 export default DomainError;
