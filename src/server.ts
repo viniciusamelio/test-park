@@ -1,16 +1,14 @@
 import express, { Request, Response } from 'express';
-
-import { PrismaClient } from '@prisma/client'
 import UserController from './presentation/controllers/user/userController';
 import MongooseService from './external/mongoose/mongooseService';
 
-const prisma = new PrismaClient()
 
 const app = express();
 app.use(express.json());
 
 const userController = new UserController();
 app.post('/user',userController.createUser);
+app.put('/user',userController.updateUser);
 
 app.get('/',(request,response)=>{
     const mongoService = new MongooseService();
@@ -18,8 +16,7 @@ app.get('/',(request,response)=>{
 });
 
 app.get('/ping', async(request: Request, response: Response)=>{
-    const teste = await prisma.user.findMany();
-    return response.json({"ping":"pong", 'env' : teste});
+    return response.json({"ping":"pong"});
 });
 
 app.listen(3000);
