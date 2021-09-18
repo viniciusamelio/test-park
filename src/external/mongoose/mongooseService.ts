@@ -18,6 +18,10 @@ class MongooseService{
             }
         }).then(()=>console.log('Conectado'))
     }
+
+    closeConnection(){
+        mongoose.disconnect();
+    }
 }
 
 export default MongooseService;
