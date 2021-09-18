@@ -1,18 +1,21 @@
 import { Request, Response } from "express";
 import MongooseCreateUserRepository from "../../../data/repositories/user/mongooseCreateUserRepository";
+import MongooseListUserRepository from "../../../data/repositories/user/mongooseListUserRepository";
 import MongooseUpdateUserRepository from "../../../data/repositories/user/mongooseUpdateUserRepository";
 import User from "../../../domain/entities/user";
 import DomainError from "../../../domain/errors/domainError";
 import CreateUserUsecase from "../../../domain/usecases/user/createUserUsecase";
+import ListUserUsecase from "../../../domain/usecases/user/listUserUsecase";
 import UpdateUserUseCase from "../../../domain/usecases/user/updateUserUsecase";
 import BcryptService from "../../../external/bcrypt/bcryptService";
 import MongooseService from "../../../external/mongoose/mongooseService";
 
 class UserController{
-    user?:User;
-    mongooseService : MongooseService = new MongooseService();
-    createUserUseCase : CreateUserUsecase = new CreateUserUsecase( new MongooseCreateUserRepository(this.mongooseService), new BcryptService() );
-    updateUserUseCase : UpdateUserUseCase = new UpdateUserUseCase( new MongooseUpdateUserRepository(this.mongooseService), new BcryptService() );
+    private user?:User;
+    private mongooseService : MongooseService = new MongooseService();
+    private createUserUseCase : CreateUserUsecase = new CreateUserUsecase( new MongooseCreateUserRepository(this.mongooseService), new BcryptService() );
+    private updateUserUseCase : UpdateUserUseCase = new UpdateUserUseCase( new MongooseUpdateUserRepository(this.mongooseService), new BcryptService() );
+    private listUserUseCase : ListUserUsecase = new ListUserUsecase( new MongooseListUserRepository(this.mongooseService) );
 
     createUser = async(request:Request, response:Response) => {
         try {
@@ -22,7 +25,7 @@ class UserController{
             if(result instanceof DomainError){
                 return response.status(result.statusCode!).json(result);
             }
-            return response.json(result).status(201);
+            return response.status(201).json(result);
         } catch (error) {
             let statusCode = 500;
             if(error instanceof DomainError) statusCode = 400;
@@ -39,9 +42,23 @@ class UserController{
             if(result instanceof DomainError){
                 return response.status(result.statusCode!).json(result);
             }
-            return response.json(result).status(201);
+            return response.json(result);
         } catch (error) {
-            console.log(error);
+            let statusCode = 500;
+            if(error instanceof DomainError) statusCode = 400;
+            return response.status(statusCode).json(error);
+        } 
+    }
+
+    listUsers = async(request:Request,response:Response) => {
+        try {
+            this.user = new User();
+            const result = await this.user.list(this.listUserUseCase);
+            if(result instanceof DomainError){
+                return response.status(result.statusCode!).json(result);
+            }
+            return response.json(result);
+        } catch (error) {
             let statusCode = 500;
             if(error instanceof DomainError) statusCode = 400;
             return response.status(statusCode).json(error);

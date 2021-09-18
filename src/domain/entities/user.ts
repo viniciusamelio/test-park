@@ -1,18 +1,20 @@
 import UserDto from "../../data/dtos/user/userDto";
 import InvalidEntityError from "../errors/invalidEntity";
 import CreateUserUsecase from "../usecases/user/createUserUsecase";
+import ListUserUsecase from "../usecases/user/listUserUsecase";
 import UpdateUserUseCase from "../usecases/user/updateUserUsecase";
 
 class User{
 
     private emailRegex = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
     
-    constructor(public data: UserDto){
-        this.checkEmail(data.email);
-        this.checkName(data.name);
-        this.checkPassword(data.password);
-        this.checkActiveStatus(data.active);
-        
+    constructor(public data?: UserDto){
+        if(data){
+            this.checkEmail(data.email);
+            this.checkName(data.name);
+            this.checkPassword(data.password);
+            this.checkActiveStatus(data.active);
+        } 
     }
 
     private checkEmail(email:string){
@@ -36,17 +38,22 @@ class User{
 
     private checkActiveStatus(active?: boolean){
         if(active == null){
-            this.data.active = true;
+            this.data!.active = true;
         }
     }
 
     create = async (usecase: CreateUserUsecase) => {
-        const result = await usecase.call(this.data);
+        const result = await usecase.call(this.data!);
         return result;
     }
 
     update = async (usecase: UpdateUserUseCase) => {
-        const result = await usecase.call(this.data);
+        const result = await usecase.call(this.data!);
+        return result;
+    }
+
+    list = async (usecase: ListUserUsecase) => {
+        const result = await usecase.call();
         return result;
     }
 }
