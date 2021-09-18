@@ -40,7 +40,7 @@ class User{
         }
     }
 
-    save = async () => {
+    create = async () => {
         const result = await this.createUserUseCase.call(this.data);
         return result;
     }
