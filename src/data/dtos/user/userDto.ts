@@ -7,6 +7,8 @@ type UserDto = {
     email:string;
     active?:boolean;
     vehicle?: VehicleDto[]|null;
+    createdAt?:Date;
+    updatedAt?:Date;
 }
 
 export default UserDto;

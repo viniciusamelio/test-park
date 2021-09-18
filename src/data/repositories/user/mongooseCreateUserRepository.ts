@@ -1,30 +1,23 @@
-import {prisma, PrismaClient } from ".prisma/client";
 import DomainError from "../../../domain/errors/domainError";
 import RepositoryError from "../../../domain/errors/repositoryError";
 import CreateUserRepository from "../../../domain/repositories/user/createUserRepository";
+import MongooseService from "../../../external/mongoose/mongooseService";
 import UserDto from "../../dtos/user/userDto";
+import UserSchema from '../../../external/mongoose/schemas/user';
 
-class PrismaCreateUserRepository implements CreateUserRepository{
-    client:PrismaClient;
+class MongooseCreateUserRepository implements CreateUserRepository{
+    constructor(mongoose: MongooseService){}
 
-    constructor(client:PrismaClient){
-        this.client = client;
-    }
-
-    async call(data: UserDto): Promise<UserDto | DomainError>{
+    async call(data: UserDto): Promise<UserDto | DomainError> {
         let result;
         try {
-            await this.client.user.create({
-                data:data
-            });
-            result = data;
+            result = await UserSchema.create(data);
         } catch (error) {
             result = new RepositoryError('Houve um erro ao salvar o usuário',error,500);
         }
-
         return result;
     }
 
 }
 
-export default PrismaCreateUserRepository;
+export default MongooseCreateUserRepository;
