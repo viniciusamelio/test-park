@@ -1,6 +1,7 @@
 import UserDto from "../../data/dtos/user/userDto";
 import InvalidEntityError from "../errors/invalidEntity";
 import CreateUserUsecase from "../usecases/user/createUserUsecase";
+import FindUserByEmailUsecase from "../usecases/user/findUserByEmailUsecase";
 import ListUserUsecase from "../usecases/user/listUserUsecase";
 import UpdateUserUseCase from "../usecases/user/updateUserUsecase";
 
@@ -54,6 +55,11 @@ class User{
 
     list = async (usecase: ListUserUsecase) => {
         const result = await usecase.call();
+        return result;
+    }
+
+    getByEmail = async (usecase: FindUserByEmailUsecase, email:string) => {
+        const result = await usecase.call(email);
         return result;
     }
 }
