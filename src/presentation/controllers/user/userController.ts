@@ -4,7 +4,7 @@ import MongooseUpdateUserRepository from "../../../data/repositories/user/mongoo
 import User from "../../../domain/entities/user";
 import DomainError from "../../../domain/errors/domainError";
 import CreateUserUsecase from "../../../domain/usecases/user/createUserUsecase";
-import UpdateUserUseCase from "../../../domain/usecases/user/updateUserUseCase";
+import UpdateUserUseCase from "../../../domain/usecases/user/updateUserUsecase";
 import BcryptService from "../../../external/bcrypt/bcryptService";
 import MongooseService from "../../../external/mongoose/mongooseService";
 
