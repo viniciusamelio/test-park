@@ -1,7 +1,7 @@
 import UserDto from "../../data/dtos/user/userDto";
 import InvalidEntityError from "../errors/invalidEntity";
 import CreateUserUsecase from "../usecases/user/createUserUsecase";
-import UpdateUserUseCase from "../usecases/user/updateUserUseCase";
+import UpdateUserUseCase from "../usecases/user/updateUserUsecase";
 
 class User{
 
