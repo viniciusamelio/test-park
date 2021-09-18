@@ -11,6 +11,7 @@ class MongooseCreateUserRepository implements CreateUserRepository{
     async call(data: UserDto): Promise<UserDto | DomainError> {
         let result;
         try {
+            await this.mongoose.openConnection();
             result = await UserSchema.create(data);
         } catch (error) {
             result = new RepositoryError('Houve um erro ao salvar o usuário',error,500);

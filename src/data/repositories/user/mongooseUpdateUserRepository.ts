@@ -13,11 +13,15 @@ class MongooseUpdateUserRepository implements UpdateUserRepository{
         let result;
         data.updatedAt = new Date();
         try {
+            await this.mongoose.openConnection();
             result = await UserSchema.findOneAndUpdate(
                 {
                     email: data.email,
                 },
-                data
+                data,
+                {
+                    new:true
+                }
             );
         } catch (error) {
             result = new RepositoryError('Houve um erro ao atualizar seu usuário',error,400);

@@ -11,16 +11,20 @@ const MONGO = {
 
 class MongooseService{
     constructor(){
-        mongoose.connect(MONGO.url,{
+        this.openConnection();
+    }
+
+    closeConnection = () =>{
+        mongoose.disconnect();
+    }
+
+    openConnection = async() =>{
+        await mongoose.connect(MONGO.url,{
             auth:{
                 password: 'password',
                 username: 'admin'
             }
-        }).then(()=>console.log('Conectado'))
-    }
-
-    closeConnection(){
-        mongoose.disconnect();
+        });
     }
 }
 
