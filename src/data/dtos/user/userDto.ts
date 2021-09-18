@@ -5,6 +5,7 @@ type UserDto = {
     name: string;
     password:string;
     email:string;
+    active?:boolean;
     vehicle?: VehicleDto[]|null;
 }
 
