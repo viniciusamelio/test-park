@@ -14,7 +14,7 @@ class MongooseLoginRepository implements LoginRepository{
             });
             result =  user;
         } catch (error) {
-            result = new RepositoryError('Não conseguimos te logar',error,401);
+            result = new RepositoryError('Houve um erro ao tentar te logar',error,500);
         }
         return result;
     }
