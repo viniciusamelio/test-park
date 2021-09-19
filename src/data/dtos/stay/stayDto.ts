@@ -1,10 +1,10 @@
 type StayDto = {
-    id:String;
-    id_status:Number;
-    id_car: Number;
+    id:string;
+    id_user: string;
     begin: Date;
-    end: Date|null;
-    vehicleId:String;
+    end?: Date|null;
+    totalAmount?: number;
+    licensePlate: string;
 }
 
 export default StayDto;
