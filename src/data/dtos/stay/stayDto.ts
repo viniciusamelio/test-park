@@ -1,8 +1,7 @@
 type StayDto = {
     id:string;
     idUser: string;
-    begin: Date;
-    end?: Date|null;
+    active: boolean; 
     totalAmount?: number;
     licensePlate: string;
 }
