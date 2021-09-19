@@ -10,12 +10,13 @@ class CreateStayUsecase{
                 private findOpenedStayRepository: FindStayOpenedRepository){}
 
     async call(data:StayDto) : Promise<StayDto|DomainError>{
-        const openedStayOrError = await this.findOpenedStayRepository.call(data.idUser);
-        if(openedStayOrError instanceof InvalidStayError){
-            return new InvalidStayError('Já existe uma estadia em aberto nessa conta!',400);
+        const openedStayOrError = await this.findOpenedStayRepository.call(data.user);
+        if(openedStayOrError instanceof DomainError) return openedStayOrError;
+        if(openedStayOrError == null){
+            const result = await this.createStayRepository.call(data);
+            return result;
         }
-        const result = await this.createStayRepository.call(data);
-        return result;
+        return new InvalidStayError('Já existe uma estadia aberta',400);
     }
 }
 

@@ -8,7 +8,7 @@ import InvalidStayError from "../../../domain/errors/invalidStayError";
 
 class MongooseFindOpenedStayRepository implements FindStayOpenedRepository{
     constructor(private mongoose: MongooseService){}
-    async call(userId: string): Promise<StayDto | DomainError> {
+    async call(userId: string): Promise<StayDto | DomainError | null> {
         let result;
         try {
             await this.mongoose.openConnection();
@@ -16,7 +16,6 @@ class MongooseFindOpenedStayRepository implements FindStayOpenedRepository{
                 user: userId,
                 active: true,
             });
-            if(result == null) return new InvalidStayError('Estadia não encontrada', 404);
         } catch (error) {
             result = new RepositoryError('Houve um erro ao buscar sua estadia em aberto',error, 500);
         }

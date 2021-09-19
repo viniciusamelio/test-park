@@ -12,8 +12,14 @@ class MongooseUpdateStayRepository implements UpdateStayRepository{
         try {
             await this.mongoose.openConnection();
             result = await StaySchema.findOneAndUpdate({
-                id: data.id
-            },data);
+                user: data.user
+            },{
+                licensePlate: data.licensePlate,
+                active: data.active
+            },
+            {
+                new: true
+            });
         } catch (error) {
             result = new RepositoryError('Houve um erro ao atualizar sua estadia',error, 500);
         }

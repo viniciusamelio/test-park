@@ -35,6 +35,23 @@ class StayController{
             return response.status(statusCode).json(error);
         }
     }
+
+    closeStay = async(request:Request, response:Response) => {
+        try {
+            const data = request.body;
+            this.stay = new Stay(data);
+            const result = await this.stay.close(this.closeStayUsecase);
+            if(result instanceof DomainError){
+                return response.status(result.statusCode!).json(result);
+            }
+            return response.status(201).json(result);
+            
+        } catch (error) {
+            let statusCode = 500;
+            if(error instanceof DomainError) statusCode = 400;
+            return response.status(statusCode).json(error);
+        }
+    }
 }
 
 export default StayController;

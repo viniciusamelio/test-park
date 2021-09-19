@@ -6,6 +6,7 @@ const StaySchema: Schema = new Schema({
         type: Boolean,
         required: true,
         default: true,
+        immutable: false
     },
     totalAmount: {
         type: Number,
