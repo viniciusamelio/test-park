@@ -4,6 +4,8 @@ type StayDto = {
     active: boolean; 
     totalAmount?: number;
     licensePlate: string;
+    createdAt?:Date;
+    updatedAt?:Date;
 }
 
 export default StayDto;
