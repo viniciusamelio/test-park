@@ -1,6 +1,6 @@
 type StayDto = {
     id:string;
-    id_user: string;
+    idUser: string;
     begin: Date;
     end?: Date|null;
     totalAmount?: number;
