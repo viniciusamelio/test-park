@@ -8,7 +8,7 @@ class CloseStayUsecase{
     async call(idUser:string) : Promise<StayDto|DomainError>{
         let openedStayOrError = await this.findOpenedStayRepository.call(idUser);
         if(openedStayOrError instanceof DomainError) return openedStayOrError;
-        openedStayOrError.end = new Date();
+        openedStayOrError.active = false;
         const result = await this.updateStayRepository.call(openedStayOrError);
         return result;
     }
