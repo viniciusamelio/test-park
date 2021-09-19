@@ -18,7 +18,7 @@ class MongooseFindOpenedStayRepository implements FindStayOpenedRepository{
             });
             if(result == null) return new InvalidStayError('Estadia não encontrada', 404);
         } catch (error) {
-            result = new RepositoryError('Houve um erro ao listar suas estadias',error, 500);
+            result = new RepositoryError('Houve um erro ao buscar sua estadia em aberto',error, 500);
         }
         this.mongoose.closeConnection();
         return result;
