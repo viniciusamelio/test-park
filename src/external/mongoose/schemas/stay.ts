@@ -1,11 +1,7 @@
 import mongoose, { Schema } from "mongoose";
-import UserDto from "../../../data/dtos/user/userDto";
+import StayDto from "../../../data/dtos/stay/stayDto";
 
 const StaySchema: Schema = new Schema({
-    name: {
-        type: String,
-        required: true,
-    },
     active: {
         type: Boolean,
         required: true,
@@ -28,4 +24,4 @@ const StaySchema: Schema = new Schema({
     }
 );
 
-export default mongoose.model<UserDto>('Stay', StaySchema);
+export default mongoose.model<StayDto>('Stay', StaySchema);
