@@ -11,6 +11,8 @@ class CloseStayUsecase{
         if(openedStayOrError instanceof DomainError) return openedStayOrError;
         if(openedStayOrError!=null){
             openedStayOrError.active = false;
+            let stayTime = (openedStayOrError.updatedAt!.getTime() - openedStayOrError.createdAt!.getTime())/3600000;
+            openedStayOrError.totalAmount = stayTime * 20;
             const result = await this.updateStayRepository.call(openedStayOrError);
             return result;
         }
