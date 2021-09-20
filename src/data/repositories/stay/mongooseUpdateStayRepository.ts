@@ -15,7 +15,8 @@ class MongooseUpdateStayRepository implements UpdateStayRepository{
                 user: data.user
             },{
                 licensePlate: data.licensePlate,
-                active: data.active
+                active: data.active,
+                totalAmount: data.totalAmount
             },
             {
                 new: true,
