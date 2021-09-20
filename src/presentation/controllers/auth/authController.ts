@@ -22,7 +22,6 @@ class AuthController{
             }
             return response.json(result);
         } catch (error) {
-            console.log(error);
             let statusCode = 500;
             if(error instanceof DomainError) statusCode = 400;
             return response.status(statusCode).json(error);
