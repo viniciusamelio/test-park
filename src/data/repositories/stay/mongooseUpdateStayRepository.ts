@@ -18,7 +18,10 @@ class MongooseUpdateStayRepository implements UpdateStayRepository{
                 active: data.active
             },
             {
-                new: true
+                new: true,
+                sort: {
+                    'createdAt' : -1
+                }
             });
         } catch (error) {
             result = new RepositoryError('Houve um erro ao atualizar sua estadia',error, 500);
