@@ -28,13 +28,13 @@ class User{
     }
 
     private checkName(name:string){
-        if(name.length < 3 || name.split(' ').length < 2){
+        if(!name ||name.length < 3 || name.split(' ').length < 2){
             throw new InvalidEntityError('Precisamos do nome com sobrenome');
         }
     }
 
     private checkPassword(password:string){
-        if(password.length < 4){
+        if(!password ||password.length < 4){
             throw new InvalidEntityError('A senha precisa ter 4 caracteres no mínimo');
         }
     }
