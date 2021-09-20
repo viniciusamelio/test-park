@@ -10,7 +10,7 @@ const fakeUser = {
     password: faker.internet.password()
 }
 
-describe('User Routes:' , () => {
+describe('Create User:' , () => {
 
     it('Should return a created user', async()=>{
         const dto = fakeUser;
