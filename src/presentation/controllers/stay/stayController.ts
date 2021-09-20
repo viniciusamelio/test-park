@@ -44,7 +44,23 @@ class StayController{
             if(result instanceof DomainError){
                 return response.status(result.statusCode!).json(result);
             }
-            return response.status(201).json(result);
+            return response.status(200).json(result);
+            
+        } catch (error) {
+            let statusCode = 500;
+            if(error instanceof DomainError) statusCode = 400;
+            return response.status(statusCode).json(error);
+        }
+    }
+
+    listStay = async(request:Request, response:Response) => {
+        try {
+            this.stay = new Stay();
+            const result = await this.stay.list(this.listStayUsecase, request.params.user);
+            if(result instanceof DomainError){
+                return response.status(result.statusCode!).json(result);
+            }
+            return response.status(200).json(result);
             
         } catch (error) {
             let statusCode = 500;

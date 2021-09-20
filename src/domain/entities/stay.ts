@@ -35,8 +35,8 @@ class Stay{
         return result;  
     }
 
-    list = async(usecase: ListStayUsecase)=>{
-        const result = await usecase.call(this.data!.user);
+    list = async(usecase: ListStayUsecase, userId:string)=>{
+        const result = await usecase.call(userId);
         return result;  
     }
 
